@@ -34,7 +34,11 @@ import java.math.BigDecimal
     }
 
     private fun startSDK() {
-       configureApp()
+        /**
+         * Required step.
+         * start the sdk.
+         */
+        configureApp()
 
 
         /**
@@ -55,23 +59,17 @@ import java.math.BigDecimal
 
         payButtonView.setupFontTypeFace(ThemeObject.getInstance().payButtonFont)
 
-
-
-        payButtonView.getPayButton().setTextSize(ThemeObject.getInstance().payButtonTextSize.toFloat())
+        payButtonView.payButton.textSize = ThemeObject.getInstance().payButtonTextSize.toFloat()
         //
-        payButtonView.getSecurityIconView().setVisibility(View.VISIBLE)
+        payButtonView.securityIconView.visibility = View.VISIBLE
 
         payButtonView.setBackgroundSelector(ThemeObject.getInstance().payButtonResourceId)
 
-        if(sdkSession!=null){
-
-            sdkSession.setButtonView(payButtonView, this, SDK_REQUEST_CODE)
-        }
+        sdkSession.setButtonView(payButtonView, this, SDK_REQUEST_CODE)
     }
 
     private fun configureSDKSession() {
-        if (sdkSession == null)
-            sdkSession = SDKSession() //** Required **
+        if (sdkSession == null) sdkSession = SDKSession() //** Required **
 
         // pass your activity as a session delegate to listen to SDK internal payment process follow
         sdkSession.addSessionDelegate(this) //** Required **
