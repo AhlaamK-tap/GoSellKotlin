@@ -111,10 +111,48 @@ import java.math.BigDecimal
 
 
     override fun paymentSucceed(charge: Charge) {
+        println("Payment Succeeded : charge status : " + charge.status)
+        println("Payment Succeeded : description : " + charge.description)
+        println("Payment Succeeded : message : " + charge.response.message)
+        println("##############################################################################")
+        if (charge.card != null) {
+            println("Payment Succeeded : first six : " + charge.card?.firstSix)
+            println("Payment Succeeded : last four: " + charge.card?.last4)
+            println("Payment Succeeded : card object : " + charge.card?.getObject())
+            println("Payment Succeeded : brand : " + charge.card?.brand)
+        }
 
+        println("##############################################################################");
+        if (charge.getAcquirer() != null) {
+            println("Payment Succeeded : acquirer id : " + charge.getAcquirer()!!.getId())
+            println("Payment Succeeded : acquirer response code : " + charge.getAcquirer()!!.getResponse().getCode())
+            println("Payment Succeeded : acquirer response message: " + charge?.getAcquirer()!!.getResponse().getMessage())
+        }
+        println("##############################################################################")
+        if (charge.source != null) {
+            println("Payment Succeeded : source id: " + charge.source.id);
+            println("Payment Succeeded : source channel: " + charge.source.channel);
+            println("Payment Succeeded : source object: " + charge.source.getObject())
+            println("Payment Succeeded : source payment method: " + charge.source.paymentMethodStringValue)
+            println("Payment Succeeded : source payment type: " + charge.source.paymentType)
+            println("Payment Succeeded : source type: " + charge.source.type)
+        }
+        println("##############################################################################")
+       
+
+        println("##############################################################################")
+        if (charge.expiry != null) {
+            println("Payment Succeeded : expiry type :" + charge?.expiry!!.getType())
+            println("Payment Succeeded : expiry period :" + charge?.expiry!!.getPeriod())
+        }
+       
+      
     }
 
     override fun paymentFailed(charge: Charge?) {
+        println("Payment Failed : " + charge?.status)
+        println("Payment Failed : " + charge?.description)
+        println("Payment Failed : " + charge?.response?.message)
 
     }
 
