@@ -150,6 +150,7 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
 
     override fun paymentFailed(charge: Charge?) {
         println("Payment Failed : " + charge?.status)
+        println("Payment Failed : " + charge?.id)
         println("Payment Failed : " + charge?.description)
         println("Payment Failed : " + charge?.response?.message)
 
