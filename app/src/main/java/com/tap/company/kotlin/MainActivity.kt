@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
         // Enable or Disable 3DSecure
         sdkSession.isRequires3DSecure(true)
 
-        sdkSession.transactionMode = TransactionMode.PURCHASE
+        sdkSession.transactionMode = TransactionMode.SAVE_CARD
 
 
 
@@ -209,12 +209,14 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
                 "Card Saved Succeeded : first six digits : " + (charge as SaveCard).card!!
                     .firstSix + "  last four :" + (charge as SaveCard).card!!.last4
             )
+
+            println("Card Saved Succeeded : " + charge.status)
+            println("Card Saved Succeeded : " + charge.card!!.brand)
+            println("Card Saved Succeeded : " + charge.description)
+            println("Card Saved Succeeded : " + charge.response.message)
+            println("Card Saved Succeeded ID: " + (charge as SaveCard).paymentAgreement?.id)
+            println("Card Saved Succeeded ID: " + (charge as SaveCard).paymentAgreement?.contract?.id)
         }
-        println("Card Saved Succeeded : " + charge.status)
-        println("Card Saved Succeeded : " + charge.card!!.brand)
-        println("Card Saved Succeeded : " + charge.description)
-        println("Card Saved Succeeded : " + charge.response.message)
-        println("Card Saved Succeeded : " + (charge as SaveCard).cardIssuer.name)
     }
 
     override fun cardSavingFailed(charge: Charge) {
