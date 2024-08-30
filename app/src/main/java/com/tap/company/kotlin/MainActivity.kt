@@ -214,8 +214,8 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
             println("Card Saved Succeeded : " + charge.card!!.brand)
             println("Card Saved Succeeded : " + charge.description)
             println("Card Saved Succeeded : " + charge.response.message)
-            println("Card Saved Succeeded ID: " + (charge as SaveCard).paymentAgreement?.id)
-            println("Card Saved Succeeded ID: " + (charge as SaveCard).paymentAgreement?.contract?.id)
+          //  println("Card Saved Succeeded ID: " + (charge as SaveCard).paymentAgreement?.id)
+          //  println("Card Saved Succeeded ID: " + (charge as SaveCard).paymentAgreement?.contract?.id)
         }
     }
 
@@ -324,9 +324,9 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
 
     }
 
-    override fun googlePayFailed(error: String?) {
+  /*  override fun googlePayFailed(error: String?) {
 
-    }
+    }*/
 }
 
 
