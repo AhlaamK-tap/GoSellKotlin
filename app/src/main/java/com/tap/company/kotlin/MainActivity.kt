@@ -324,9 +324,9 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
 
     }
 
-  /*  override fun googlePayFailed(error: String?) {
+   override fun googlePayFailed(error: String?) {
 
-    }*/
+    }
 }
 
 
