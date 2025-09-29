@@ -19,9 +19,11 @@ import company.tap.gosellapi.open.enums.TransactionMode
 import company.tap.gosellapi.open.models.CardsList
 import company.tap.gosellapi.open.models.Customer
 import company.tap.gosellapi.open.models.TapCurrency
+import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
+import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration.Companion.configureWithTapBenfitPayDictionaryConfiguration
 import java.math.BigDecimal
 
-class MainActivity : AppCompatActivity() , SessionDelegate {
+class MainActivity : AppCompatActivity() , SessionDelegate , TapBenefitPayStatusDelegate {
 
     var sdkSession :SDKSession =SDKSession()
    lateinit var payButtonView :PayButtonView
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
         setContentView(R.layout.activity_main)
 
         startSDK()
+        configureSdk()
     }
 
     private fun startSDK() {
@@ -105,7 +108,7 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
      */
     private fun configureApp(){
         GoSellSDK.init(this@MainActivity, "sk_test_kovrMB0mupFJXfNZWx6Etg5y","company.tap.goSellSDKExample")  // to be replaced by merchant, you can contact tap support team to get you credentials
-        GoSellSDK.setLocale("en")//  if you dont pass locale then default locale EN will be used
+      //  GoSellSDK.setLocale("en")//  if you dont pass locale then default locale EN will be used
     }
 
 
@@ -325,6 +328,164 @@ class MainActivity : AppCompatActivity() , SessionDelegate {
     }
 
    override fun googlePayFailed(error: String?) {
+
+    }
+    private fun configureSdk() {
+        // ======================
+        // Operator
+        // ======================
+
+        val operator = HashMap<String, Any>()
+        operator["publicKey"] = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7" // hardcoded
+        operator["hashString"] = "" // hardcoded
+        operator["scopeKey"] = "charge" // hardcoded
+
+        Log.e("orderData", "publicKey=pk_test_123456 \nhash=hash_test_123456")
+
+        // ======================
+        // Metadata
+        // ======================
+        val metadata = HashMap<String, Any>()
+        metadata["id"] = ""
+
+        // ======================
+        // Order
+        // ======================
+        val orderId = "ORD_001"
+        val orderDescription = "Sample order description"
+        val orderAmount = "1"
+        val orderReference = "REF_123456"
+        val selectedCurrency = "BHD"
+
+        val order = HashMap<String, Any>()
+        order["id"] = orderId
+        order["amount"] = orderAmount
+        order["currency"] = selectedCurrency
+        order["description"] = orderDescription
+        order["reference"] = orderReference
+        order["metadata"] = metadata
+
+        Log.e(
+            "orderData", """
+     id=$orderId
+     desc=$orderDescription
+     amount=$orderAmount
+     ref=$orderReference
+     currency=$selectedCurrency
+     """.trimIndent()
+        )
+
+        // ======================
+        // Merchant
+        // ======================
+        val merchant = HashMap<String, Any>()
+        merchant["id"] = ""
+
+        // ======================
+        // Invoice
+        // ======================
+        val invoice = HashMap<String, Any>()
+        invoice["id"] = ""
+
+        // ======================
+        // Phone
+        // ======================
+        val phone = HashMap<String, Any>()
+        phone["countryCode"] = "965"
+        phone["number"] = "6617090"
+
+        // ======================
+        // Contact
+        // ======================
+        val contact = HashMap<String, Any>()
+        contact["email"] = "email@emailc.com"
+        contact["phone"] = phone
+
+        // ======================
+        // Interface
+        // ======================
+        val selectedLanguage = "en"
+        val selectedCardEdge = "circular"
+        val paymentMethod = "benefitpay"
+
+        Log.e("interfaceData", "language=$selectedLanguage cardedge=$selectedCardEdge")
+
+        val interfacee = HashMap<String, Any>()
+        interfacee["locale"] = selectedLanguage
+        interfacee["edges"] = selectedCardEdge
+
+        // ======================
+        // Post
+        // ======================
+        val post = HashMap<String, Any>()
+        post["url"] = ""
+
+        // ======================
+        // Transaction
+        // ======================
+        val transaction = HashMap<String, Any>()
+        transaction["amount"] = orderAmount
+        transaction["currency"] = selectedCurrency
+        transaction["autoDismiss"] = false // hardcoded false
+
+        Log.e("transaction", "amount=$orderAmount currency=$selectedCurrency")
+
+        // ======================
+        // Reference
+        // ======================
+        val reference = HashMap<String, Any>()
+        reference["transaction"] = orderReference
+        reference["order"] = orderDescription
+
+        // ======================
+        // Name
+        // ======================
+        val name = HashMap<String, Any>()
+        name["lang"] = selectedLanguage
+        name["first"] = "TAP"
+        name["middle"] = "middle"
+        name["last"] = "PAYMENTS"
+
+        // ======================
+        // Customer
+        // ======================
+        val customer = HashMap<String, Any>()
+        customer["id"] = ""
+        customer["contact"] = contact
+        customer["names"] = listOf(name)
+
+        // ======================
+        // Configuration
+        // ======================
+        val configuration = LinkedHashMap<String, Any>()
+        configuration["paymentMethod"] = paymentMethod
+        configuration["merchant"] = merchant
+        configuration["scope"] = "scope_test_123456"
+        configuration["redirect"] = "tapredirectionwebsdk://"
+        configuration["customer"] = customer
+        configuration["interface"] = interfacee
+        configuration["reference"] = reference
+        configuration["metadata"] = ""
+        configuration["post"] = post
+        configuration["transaction"] = transaction
+        configuration["operator"] = operator
+
+        // ======================
+        // Call SDK Configurator
+        // ======================
+        configureWithTapBenfitPayDictionaryConfiguration(
+            this,
+            findViewById(R.id.benfit_pay),
+            configuration,
+            this
+        )
+    }
+
+    override fun onBenefitPayError(error: String) {
+
+    }
+
+    override fun onBenefitPaySuccess(data: String) {
 
     }
 }

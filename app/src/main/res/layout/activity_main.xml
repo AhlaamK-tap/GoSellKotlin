@@ -15,7 +15,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/benfit_pay"
+        android:layout_marginTop="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/payButtonId"
+        android:layout_gravity="center_horizontal"
+        />
     <company.tap.gosellapi.open.buttons.PayButtonView
         android:id="@+id/payButtonId"
         android:layout_width="match_parent"
