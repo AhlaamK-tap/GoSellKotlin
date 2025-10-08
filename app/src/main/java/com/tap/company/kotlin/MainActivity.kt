@@ -15,6 +15,7 @@ import company.tap.gosellapi.open.buttons.PayButtonView
 import company.tap.gosellapi.open.controllers.SDKSession
 import company.tap.gosellapi.open.controllers.ThemeObject
 import company.tap.gosellapi.open.delegate.SessionDelegate
+import company.tap.gosellapi.open.enums.AppearanceMode
 import company.tap.gosellapi.open.enums.TransactionMode
 import company.tap.gosellapi.open.models.CardsList
 import company.tap.gosellapi.open.models.Customer
@@ -96,7 +97,11 @@ class MainActivity : AppCompatActivity() , SessionDelegate , TapBenefitPayStatus
         // Enable or Disable 3DSecure
         sdkSession.isRequires3DSecure(true)
 
-        sdkSession.transactionMode = TransactionMode.SAVE_CARD
+        ThemeObject.getInstance()
+           // .setAppearanceMode(AppearanceMode.WINDOWED_MODE)
+            .setSdkLanguage("en")
+
+        sdkSession.transactionMode = TransactionMode.PURCHASE
 
 
 
@@ -108,7 +113,7 @@ class MainActivity : AppCompatActivity() , SessionDelegate , TapBenefitPayStatus
      */
     private fun configureApp(){
         GoSellSDK.init(this@MainActivity, "sk_test_kovrMB0mupFJXfNZWx6Etg5y","company.tap.goSellSDKExample")  // to be replaced by merchant, you can contact tap support team to get you credentials
-      //  GoSellSDK.setLocale("en")//  if you dont pass locale then default locale EN will be used
+        GoSellSDK.setLocale(this,"en")//  if you dont pass locale then default locale EN will be used
     }
 
 
